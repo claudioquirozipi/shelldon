@@ -1,25 +1,56 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import firebase from 'firebase';
+// import Login from './components/login.js';
 import './App.css';
 
+// componentes
+import LandingPage from './components/LandingPage.js';
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    this.state = { 
+      user: null,
+      auth: false
+    };
+    this.miRender = this.miRender.bind(this);
+  }
+
+
+  handleLogout() {
+    firebase.auth().signOut()
+  }
+  componentWillMount() {
+    firebase.auth().onAuthStateChanged( user => {
+      this.setState({  user })
+
+    }); 
+  }
+  miRender() {
+        if (this.state.user) {
+          console.log("true true")
+          return ( 
+            <div>
+              <h1>Estás conectado como: {this.state.user.email}</h1>
+              <button onClick={this.handleLogout}>Cerrar seción</button>
+            </div>
+          )
+        } else {
+          console.log("false")
+          return (
+            <div>
+              <LandingPage />
+            </div>
+          )
+        }
+  }
   render() {
+       
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {console.log(this.state.user)}
+        {this.miRender()}   
       </div>
     );
   }

@@ -1,0 +1,15 @@
+.landing__nav {
+    background: #008BE5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 8.3vw;
+    color: #fff;
+    font-weight: 700;
+}
+.ContainerForm {
+    background: red;
+}
+.nav__ul {
+    position: relative;
+}
